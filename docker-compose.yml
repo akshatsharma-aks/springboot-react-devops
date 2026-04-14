@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3307:3306"
+
+  cicd-java-demo:
+    build: ./cicd-java-demo
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cicd-java-demo
